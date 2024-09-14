@@ -6,10 +6,6 @@ handle_error() {
     exit 1
 }
 
-# 更新系统并安装必要的软件包
-echo "更新系统并安装必要的软件包..."
-sudo apt update || handle_error "更新系统失败，请检查网络连接。"
-sudo apt install -y wget curl || handle_error "安装 wget 和 curl 失败。"
 
 # 安装 sing-box
 echo "正在安装 sing-box..."
