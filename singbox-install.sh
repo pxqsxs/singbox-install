@@ -144,9 +144,6 @@ echo "启动并设置 sing-box 服务为开机自启..."
 sudo systemctl start sing-box || handle_error "启动 sing-box 服务失败。"
 sudo systemctl enable sing-box || handle_error "设置 sing-box 开机自启失败。"
 
-# 检查服务状态
-echo "正在检查 sing-box 服务状态..."
-sudo systemctl status sing-box || handle_error "无法获取 sing-box 服务状态。"
 
 # 输出公钥和其他关键信息
 echo "----------------------------------------"
