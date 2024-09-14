@@ -28,9 +28,8 @@ PRIVATE_KEY=$(echo "$REALITY_KEYPAIR" | grep "PrivateKey" | awk '{print $2}') ||
 PUBLIC_KEY=$(echo "$REALITY_KEYPAIR" | grep "PublicKey" | awk '{print $2}') || handle_error "提取公钥失败。"
 SHORT_ID=$(sing-box generate rand --hex 8) || handle_error "生成 Short ID 失败。"
 
-# 获取服务器的外部 IPv4 和 IPv6 地址
-SERVER_IP_V4=$(curl -s ifconfig.me) || handle_error "获取 IPv4 地址失败，请检查网络连接。"
-SERVER_IP_V6=$(curl -s https://v6.ifconfig.me) || handle_error "获取 IPv6 地址失败，请检查网络连接。"
+# 获取服务器的外部 IPv4
+SERVER_IP_V4=$(curl -s -4 ifconfig.me) || handle_error "获取 IPv4 地址失败，请检查网络连接。"
 
 # 替换现有的配置文件内容
 echo "替换 /etc/sing-box/config.json 配置文件内容..."
@@ -150,7 +149,6 @@ sudo systemctl enable sing-box || handle_error "设置 sing-box 开机自启失�
 echo "----------------------------------------"
 echo "Sing-box 已成功安装和配置！"
 echo "IPv4 地址: $SERVER_IP_V4"
-echo "IPv6 地址: $SERVER_IP_V6"
 echo "UUID: $UUID"
 echo "监听端口: $LISTEN_PORT"
 echo "Reality 公钥: $PUBLIC_KEY"
