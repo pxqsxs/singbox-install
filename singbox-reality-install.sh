@@ -155,9 +155,12 @@ sudo systemctl enable sing-box || handle_error "设置 sing-box 开机自启失�
 # 输出公钥和其他关键信息
 echo "----------------------------------------"
 echo "Sing-box 已成功安装和配置！"
+echo "协议：vless-reality-vision"
 echo "地址: $getIP"
 echo "UUID: $UUID"
 echo "监听端口: $LISTEN_PORT"
+echo "flow: xtls-rprx-vision"
+echo "SNI: icloud.cdn-apple.com"
 echo "Reality 公钥: $PUBLIC_KEY"
 echo "Short ID: $SHORT_ID"
 echo "----------------------------------------"
