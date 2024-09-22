@@ -156,7 +156,7 @@ sudo systemctl enable sing-box || handle_error "设置 sing-box 开机自启失�
 echo "----------------------------------------"
 echo "Sing-box 已成功安装和配置！"
 echo "协议：vless-reality-vision"
-echo "地址: $getIP"
+echo "地址: ${serverIP}"
 echo "UUID: $UUID"
 echo "监听端口: $LISTEN_PORT"
 echo "flow: xtls-rprx-vision"
