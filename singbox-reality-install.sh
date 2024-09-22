@@ -6,9 +6,13 @@ handle_error() {
     exit 1
 }
 
-# 安装 sing-box
-echo "正在安装 sing-box..."
-bash <(curl -fsSL https://sing-box.app/deb-install.sh) || handle_error "安装 sing-box 失败。"
+# 检查 Sing-box 是否已安装
+if ! command -v sing-box &> /dev/null; then
+    echo "正在安装 sing-box..."
+    bash <(curl -fsSL https://sing-box.app/deb-install.sh) || handle_error "安装 sing-box 失败。"
+else
+    echo "sing-box 已安装，准备重启服务..."
+fi
 
 # 开启 BBR 拥塞控制
 echo "开启 BBR 拥塞控制算法..."
@@ -147,10 +151,19 @@ sudo tee $CONFIG_PATH > /dev/null <<EOF || handle_error "替换配置文件失�
 }
 EOF
 
-# 启动并启用 sing-box 服务
-echo "启动并设置 sing-box 服务为开机自启..."
-sudo systemctl start sing-box || handle_error "启动 sing-box 服务失败。"
-sudo systemctl enable sing-box || handle_error "设置 sing-box 开机自启失败。"
+
+# 检查 sing-box 服务状态
+if systemctl is-active --quiet sing-box; then
+    echo "sing-box 服务正在运行，准备重启..."
+    sudo systemctl restart sing-box || handle_error "重启 sing-box 服务失败。"
+else
+    echo "sing-box 服务未运行，准备启动..."
+    sudo systemctl start sing-box || handle_error "启动 sing-box 服务失败。"
+    echo "设置 sing-box 服务为开机自启..."
+    sudo systemctl enable sing-box || handle_error "设置 sing-box 开机自启失败。"
+fi
+
+
 
 # 输出公钥和其他关键信息
 echo "----------------------------------------"
